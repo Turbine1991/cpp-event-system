@@ -25,32 +25,32 @@ const BaseEvent::names_t& BaseEvent::getNames()
    return names;
 }
 
-void BaseEvent::add(unique_name_t uniqueName, void* funct, bool append)
+void BaseEvent::add(action_name_t actionName, void* funct, bool append)
 {
    assert(funct != NULL);
 
    if (!append)
       clear();
 
-   functs.insert(std::make_pair(uniqueName, funct));
+   functs.insert(std::make_pair(actionName, funct));
 }
 
-void BaseEvent::replace(unique_name_t uniqueName, void* funct)
+void BaseEvent::replace(action_name_t actionName, void* funct)
 {
    assert(funct != NULL);
 
-   if (exists(uniqueName))
-      functs[uniqueName] = funct;
+   if (exists(actionName))
+      functs[actionName] = funct;
 }
 
-bool BaseEvent::exists(unique_name_t uniqueName)
+bool BaseEvent::exists(action_name_t actionName)
 {
-   return functs.find(uniqueName) != functs.end();
+   return functs.find(actionName) != functs.end();
 }
 
-bool BaseEvent::remove(unique_name_t uniqueName)
+bool BaseEvent::remove(action_name_t actionName)
 {
-   functs_t::iterator it = functs.find(uniqueName);
+   functs_t::iterator it = functs.find(actionName);
    if (it == functs.end())
       return false;
 
