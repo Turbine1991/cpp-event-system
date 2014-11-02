@@ -21,9 +21,9 @@ public:
    bool disabled;
 
    BaseEvent(name_t eventName = "");
-   name_t getEventName();
-   bool hasEventName(name_t eventName);
-   const names_t& getEventNames();
+   name_t getName();
+   bool hasName(name_t eventName);
+   const names_t& getNames();
    void add(unique_name_t uniqueName, void* funct, bool append = true);
    void replace(unique_name_t uniqueName, void* funct);
    bool exists(unique_name_t uniqueName);

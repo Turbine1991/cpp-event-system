@@ -32,19 +32,19 @@ public:
    BaseEvents();
    ~BaseEvents();
    template <typename... Args>
-      event_t& create(event_name_t name, event_id_t eventId, Args... args);
-   event_t& get(event_id_t eventId);
-   event_t& get(event_name_t eventName);
-   bool exists(event_id_t eventId);
-   bool exists(event_name_t eventName);
+      event_t& create(event_name_t name, event_id_t id, Args... args);
+   event_t& get(event_id_t id);
+   event_t& get(event_name_t name);
+   bool exists(event_id_t id);
+   bool exists(event_name_t name);
    all_t& getAll();
 
 protected:
    template <typename U>
-      typename U::iterator find(U& data, event_name_t eventName);
-   typename all_t::iterator find(event_name_t eventName);
+      typename U::iterator find(U& data, event_name_t name);
+   typename all_t::iterator find(event_name_t name);
    bool exists(typename all_t::iterator it);
-   void place(event_t* event, event_id_t eventId = 0);
+   void place(event_t* event, event_id_t id = 0);
 
 private:
    all_t all;
@@ -69,65 +69,65 @@ template <typename T>
 
 template <typename T>
    template <typename... Args>
-      typename BaseEvents<T>::event_t& BaseEvents<T>::create(event_name_t eventName, event_id_t eventId, Args... args)
+      typename BaseEvents<T>::event_t& BaseEvents<T>::create(event_name_t name, event_id_t id, Args... args)
 {
-   assert(!exists(eventName));
+   assert(!exists(name));
 
-   event_t* event = new event_t(eventName, args...);
-   place(event, eventId);
+   event_t* event = new event_t(name, args...);
+   place(event, id);
 
    return *event;
 }
 
 template <typename T>
-   typename BaseEvents<T>::event_t& BaseEvents<T>::get(event_id_t eventId)
+   typename BaseEvents<T>::event_t& BaseEvents<T>::get(event_id_t id)
 {
-   event_t* event = all.at(eventId);
-   assert(eventId != 0 && event != NULL);
+   event_t* event = all.at(id);
+   assert(id != 0 && event != NULL);
    return *event;
 }
 
 template <typename T>
-   typename BaseEvents<T>::event_t& BaseEvents<T>::get(event_name_t eventName)
+   typename BaseEvents<T>::event_t& BaseEvents<T>::get(event_name_t name)
 {
-   typename all_t::iterator it = find(eventName);
+   typename all_t::iterator it = find(name);
    assert(exists(it));
    return **it;
 }
 
 template <typename T>
-   bool BaseEvents<T>::exists(event_id_t eventId)
+   bool BaseEvents<T>::exists(event_id_t id)
 {
-   if (!all.in_bounds(eventId))
+   if (!all.in_bounds(id))
       return false;
 
-   return all.at(eventId) != NULL;
+   return all.at(id) != NULL;
 }
 
 template <typename T>
-   bool BaseEvents<T>::exists(event_name_t eventName)
+   bool BaseEvents<T>::exists(event_name_t name)
 {
-   return exists(find(eventName));
+   return exists(find(name));
 }
 
 ///Protected
 template <typename T>
    template <typename U>
-      typename U::iterator BaseEvents<T>::find(U& data, event_name_t eventName)
+      typename U::iterator BaseEvents<T>::find(U& data, event_name_t name)
 {
-   return std::find_if(data.begin(), data.end(), [eventName] (event_t* event)
+   return std::find_if(data.begin(), data.end(), [name] (event_t* event)
    {
       if (event == NULL)
          return false;
 
-      return event->hasEventName(eventName);
+      return event->hasName(name);
    });
 }
 
 template <typename T>
-   typename BaseEvents<T>::all_t::iterator BaseEvents<T>::find(event_name_t eventName)
+   typename BaseEvents<T>::all_t::iterator BaseEvents<T>::find(event_name_t name)
 {
-   return find(all, eventName);
+   return find(all, name);
 }
 
 template <typename T>
@@ -143,12 +143,12 @@ template <typename T>
 }
 
 template <typename T>
-   void BaseEvents<T>::place(event_t* event, event_id_t eventId)
+   void BaseEvents<T>::place(event_t* event, event_id_t id)
 {
    assert(event != NULL);
 
-   if (eventId == 0)
+   if (id == 0)
       all.place_back(event);
    else
-      all.place(eventId, event);
+      all.place(id, event);
 }

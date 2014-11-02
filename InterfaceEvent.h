@@ -7,7 +7,7 @@ class InterfaceEvent
 public:
    typedef std::string name_t;
 
-   virtual name_t getEventName() = 0;
-   virtual bool hasEventName(name_t eventName) = 0;
+   virtual name_t getName() = 0;
+   virtual bool hasName(name_t name) = 0;
 };
 

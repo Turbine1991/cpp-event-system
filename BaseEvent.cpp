@@ -5,22 +5,22 @@
 using namespace std;
 
 ///Public
-BaseEvent::BaseEvent(name_t eventName): disabled(false)
+BaseEvent::BaseEvent(name_t name): disabled(false)
 {
-   names.push_back(eventName);
+   names.push_back(name);
 }
 
-BaseEvent::name_t BaseEvent::getEventName()
+BaseEvent::name_t BaseEvent::getName()
 {
    return names.front();
 }
 
-bool BaseEvent::hasEventName(name_t eventName)
+bool BaseEvent::hasName(name_t name)
 {
-   return std::find(names.begin(), names.end(), eventName) != names.end();
+   return std::find(names.begin(), names.end(), name) != names.end();
 }
 
-const BaseEvent::names_t& BaseEvent::getEventNames()
+const BaseEvent::names_t& BaseEvent::getNames()
 {
    return names;
 }
