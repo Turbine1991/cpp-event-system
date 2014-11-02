@@ -9,11 +9,11 @@
 #include <unordered_map>
 #include <string>
 #include <list>
+#include "InterfaceEvent.h"
 
-class BaseEvent
+class BaseEvent: public InterfaceEvent
 {
 public:
-   typedef std::string name_t;
    typedef std::list<name_t> names_t;
    typedef std::string unique_name_t;
    typedef std::unordered_map<unique_name_t, void*> functs_t;

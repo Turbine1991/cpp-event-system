@@ -18,6 +18,7 @@
 #include <assert.h>
 #include <stdint.h>
 #include "PlaceableVector.h"
+#include "InterfaceEvent.h"
 
 template <typename T>
    class BaseEvents
